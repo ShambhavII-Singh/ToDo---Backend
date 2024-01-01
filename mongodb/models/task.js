@@ -25,9 +25,13 @@ const taskSchema = mongoose.Schema({
         default: false
     },
     category: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Category"
+        type: String,
+        required: true
     },
+    creator: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    }
 })
 
 const taskModel = mongoose.model("Task",taskSchema);

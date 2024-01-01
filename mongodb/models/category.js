@@ -8,6 +8,10 @@ const categorySchema = mongoose.Schema({
     description: {
         type: String,
         required: false
+    },
+    creator: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
     }
 })
 

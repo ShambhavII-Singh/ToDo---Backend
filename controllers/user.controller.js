@@ -1,25 +1,52 @@
-import mongoose from 'mongoose';
 import User from '../mongodb/models/user.js';
 
-const getUser = async (req, res) => {
-    
+const getAllUsers = async (req, res) => {
+    try {
+        const users = await User.find({}).limit(req.query._end);
+
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+const getUserbyID = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const user = await User.findOne({ _id : id });
+
+        if (user) {
+            res.status(200).json(user);
+        } else {
+            res.status(404).json({ message: "User not found" });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 };
 
 const createUser = async (req, res) => {
-    
-};
+    try {
+        const { email, name } = req.body;
 
-const updateUser = async (req, res) => {
-    
-};
+        const userExists = await User.findOne({ email });
 
-const deleteUser = async (req, res) => {
-    
+        if (userExists) {
+            return res.status(200).json(userExists);
+        }
+        const newUser = await User.create({
+            email,
+            name,
+        })
+        res.status(200).json(newUser);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
 };
 
 export {
-    getUser,
+    getUserbyID,
     createUser,
-    updateUser,
-    deleteUser,
+    getAllUsers
 };

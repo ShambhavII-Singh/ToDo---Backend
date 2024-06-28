@@ -3,21 +3,23 @@ import * as dotenv from 'dotenv';
 import cors from 'cors';
 import connectDB from './mongodb/connect.js';
 
-// import userRouter from "./routes/user.routes.js";
-// import propertyRouter from "./routes/property.routes.js";
+import userRouter from './routers/user.routes.js';
+import taskRouter from './routers/task.routes.js';
+import categoryRouter from './routers/category.routes.js';
 
 dotenv.config();
 
 const app = express();
 app.use(cors());
-app.use(express.json({ limit: '50mb' }));
+app.use(express.json());
 
 app.get('/', (req, res) => {
     res.send({ message: "Hello World!" });
 })
 
-// app.use("/api/v1/users", userRouter);
-// app.use("/api/v1/properties", propertyRouter);
+app.use("/api/v1/users", userRouter);
+app.use("/api/v1/tasks", taskRouter);
+app.use("/api/v1/categories", categoryRouter);
 
 const startServer = async () => {
     try {

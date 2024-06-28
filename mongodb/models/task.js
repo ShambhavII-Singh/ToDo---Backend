@@ -10,9 +10,8 @@ const taskSchema = mongoose.Schema({
         required: false
     },
     timestamp: {
-        type: Date,
+        type: String,
         required: true,
-        default: Date.now()
     },
     completed: {
         type: Boolean,
@@ -25,8 +24,8 @@ const taskSchema = mongoose.Schema({
         default: false
     },
     category: {
-        type: String,
-        required: true
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Category",
     },
     creator: {
         type: mongoose.Schema.Types.ObjectId,
